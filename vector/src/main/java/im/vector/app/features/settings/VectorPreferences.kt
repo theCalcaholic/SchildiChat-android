@@ -325,7 +325,7 @@ class VectorPreferences @Inject constructor(private val context: Context) {
     }
 
     fun labAddNotificationTab(): Boolean {
-        return defaultPrefs.getBoolean(SETTINGS_LABS_UNREAD_NOTIFICATIONS_AS_TAB, false)
+        return defaultPrefs.getBoolean(SETTINGS_LABS_UNREAD_NOTIFICATIONS_AS_TAB, true)
     }
 
     fun failFast(): Boolean {
@@ -862,7 +862,7 @@ class VectorPreferences @Inject constructor(private val context: Context) {
      * @return true to show emoji keyboard button.
      */
     fun showEmojiKeyboard(): Boolean {
-        return defaultPrefs.getBoolean(SETTINGS_SHOW_EMOJI_KEYBOARD, true)
+        return defaultPrefs.getBoolean(SETTINGS_SHOW_EMOJI_KEYBOARD, false)
     }
 
     /**
@@ -936,10 +936,10 @@ class VectorPreferences @Inject constructor(private val context: Context) {
 
     // SC addition
     fun simplifiedMode(): Boolean {
-        return defaultPrefs.getBoolean(SETTINGS_SIMPLIFIED_MODE, false)
+        return defaultPrefs.getBoolean(SETTINGS_SIMPLIFIED_MODE, true)
     }
     fun needsSimplifiedModePrompt(): Boolean {
-        return !defaultPrefs.contains(SETTINGS_SIMPLIFIED_MODE)
+        return false //!defaultPrefs.contains(SETTINGS_SIMPLIFIED_MODE)
     }
     fun setSimplifiedMode(simplified: Boolean) {
         defaultPrefs

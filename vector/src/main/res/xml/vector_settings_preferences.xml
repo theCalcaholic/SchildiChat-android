@@ -14,14 +14,14 @@
             app:fragment="im.vector.app.features.settings.locale.LocalePickerFragment" />
 
         <im.vector.app.core.preference.VectorSwitchPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="SETTINGS_SIMPLIFIED_MODE"
             android:title="@string/settings_simplified_mode"
             android:summary="@string/settings_simplified_mode_summary"
             app:iconSpaceReserved="false" />
 
         <im.vector.app.core.preference.VectorListPreference
-            android:defaultValue="sc_light"
+            android:defaultValue="senior_default"
             android:entries="@array/theme_entries"
             android:entryValues="@array/theme_values"
             android:key="APPLICATION_THEME_KEY"
@@ -59,6 +59,7 @@
         -->
 
         <im.vector.app.core.preference.VectorPreference
+            android:defaultValue="4"
             android:dialogTitle="@string/font_size"
             android:key="SETTINGS_INTERFACE_TEXT_SIZE_KEY"
             android:persistent="false"

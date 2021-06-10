@@ -48,7 +48,7 @@ object FontScale {
             FontScaleValue(6, "FONT_SCALE_HUGE", 1.60f, R.string.huge)
     )
 
-    private val normalFontScaleValue = fontScaleValues[2]
+    private val normalFontScaleValue = fontScaleValues[4]
 
     /**
      * Get the font scale value from SharedPrefs. Init the SharedPrefs if necessary
@@ -59,7 +59,8 @@ object FontScale {
         val preferences = DefaultSharedPreferences.getInstance(context)
 
         return if (APPLICATION_FONT_SCALE_KEY !in preferences) {
-            val fontScale = context.resources.configuration.fontScale
+            //val fontScale = context.resources.configuration.fontScale
+            val fontScale = normalFontScaleValue.scale
 
             (fontScaleValues.firstOrNull { it.scale == fontScale } ?: normalFontScaleValue)
                     .also { preferences.edit { putString(APPLICATION_FONT_SCALE_KEY, it.preferenceValue) } }

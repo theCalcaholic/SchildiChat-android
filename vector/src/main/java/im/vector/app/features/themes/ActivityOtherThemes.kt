@@ -30,7 +30,8 @@ sealed class ActivityOtherThemes(@StyleRes val light: Int,
                                  @StyleRes val sc: Int,
                                  @StyleRes val sc_dark: Int,
                                  @StyleRes val sc_colored: Int,
-                                 @StyleRes val sc_dark_colored: Int) {
+                                 @StyleRes val sc_dark_colored: Int,
+                                 @StyleRes val senior_default: Int) {
 
     object Default : ActivityOtherThemes(
             R.style.AppTheme_Light,
@@ -40,7 +41,8 @@ sealed class ActivityOtherThemes(@StyleRes val light: Int,
             R.style.AppTheme_SC,
             R.style.AppTheme_SC_Dark,
             R.style.AppTheme_SC_Colored,
-            R.style.AppTheme_SC_Dark_Colored
+            R.style.AppTheme_SC_Dark_Colored,
+            R.style.AppTheme_Senior_Default
     )
 
     object Launcher : ActivityOtherThemes(
@@ -52,6 +54,7 @@ sealed class ActivityOtherThemes(@StyleRes val light: Int,
             R.style.AppTheme_Launcher_SC,
             R.style.AppTheme_Launcher_SC,
             R.style.AppTheme_Launcher_SC,
+            R.style.AppTheme_Launcher_SC
     )
 
     object AttachmentsPreview : ActivityOtherThemes(
@@ -62,13 +65,15 @@ sealed class ActivityOtherThemes(@StyleRes val light: Int,
             R.style.AppTheme_AttachmentsPreview_SC,
             R.style.AppTheme_AttachmentsPreview_SC,
             R.style.AppTheme_AttachmentsPreview_SC,
-            R.style.AppTheme_AttachmentsPreview_SC
+            R.style.AppTheme_AttachmentsPreview_SC,
+            R.style.AppTheme_AttachmentsPreview_SC,
     )
 
     object VectorAttachmentsPreview : ActivityOtherThemes(
             R.style.AppTheme_Transparent,
             R.style.AppTheme_Transparent,
             R.style.AppTheme_Transparent,
+            R.style.AppTheme_Transparent_SC,
             R.style.AppTheme_Transparent_SC,
             R.style.AppTheme_Transparent_SC,
             R.style.AppTheme_Transparent_SC,

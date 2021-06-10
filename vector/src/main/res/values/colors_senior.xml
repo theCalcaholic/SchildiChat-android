@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="accent_senior">#788EBD</color>
+    <color name="accent_senior_alpha25">#788EBD</color>
+    <color name="accent_senior_alpha12">#ACBBDC</color>
+    <color name="accent_senior_dark">#203A71</color>
+    <color name="accent_senior_50">#ACBBDC</color>
+    <color name="accent_senior_100">#788EBD</color>
+    <color name="accent_senior_200">#516A9F</color>
+    <color name="accent_senior_300">#355089</color>
+    <color name="accent_senior_900">#203A71</color>
+    <color name="accent_senior_pale">@color/accent_senior_300</color>
+    <color name="direct_chat_ring_color_senior">@color/accent_senior_dark</color>
+
+    <color name="avatar_fill_senior_1">@color/accent_senior</color>
+    <color name="username_senior_1">@color/accent_senior</color>
+
+    <color name="text_color_primary_senior">#ffffff</color>
+    <color name="text_color_secondary_senior">#b3ffffff</color>
+    <color name="text_color_tertiary_senior">#80ffffff</color>
+    <color name="text_color_disabled_senior">#80ffffff</color>
+
+    <color name="background_senior">#ff303030</color>
+    <color name="background_dark_senior">#ff212121</color>
+    <color name="background_black_senior">#ff000000</color>
+    <color name="background_floating_senior">#ff424242</color>
+    <color name="background_touch_guard_senior">#bf000000</color>
+
+    <color name="list_divider_color_senior">#80ffffff</color>
+
+<!--    <color name="timestamp_overlay_fg">#ffffff</color>-->
+<!--    <color name="timestamp_overlay_bg">#80000000</color>-->
+
+    <color name="senior_reaction_background_on_light">@color/accent_senior_50</color>
+    <color name="senior_reaction_background_on_dark">@color/accent_senior_900</color>
+
+    <!-- This is actually not an SC color, but the one found in element for ic_material_play_circle PNGs -->
+<!--    <color name="element_accent_pale">#76cfa6</color>-->
+</resources>

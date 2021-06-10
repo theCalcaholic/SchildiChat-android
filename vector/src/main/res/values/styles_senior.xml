@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="VectorButtonStyle.Senior">
+        <item name="backgroundTint">@color/button_background_tint_selector_senior</item>
+    </style>
+
+    <style name="VectorAlertDialogStyleDark.Senior">
+        <item name="buttonBarButtonStyle">@style/VectorAlertDialogButtonStyle.SC</item>
+        <item name="colorSecondary">@color/accent_senior</item>
+    </style>
+
+    <style name="VectorAlertDialogStyleLight.Senior">
+        <item name="buttonBarButtonStyle">@style/VectorAlertDialogButtonStyle.SC</item>
+        <item name="colorSecondary">@color/accent_senior</item>
+    </style>
+
+    <style name="VectorAlertDialogButtonStyle.Senior">
+        <item name="android:textColor">?colorAccent</item>
+    </style>
+
+    <!-- custom action bar -->
+    <style name="Vector.Styled.ActionBar.Senior">
+        <item name="android:background">@color/background_dark_senior</item>
+        <item name="background">@color/background_dark_senior</item>
+    </style>
+
+    <!-- BottomSheet theming -->
+    <style name="Vector.BottomSheet.Senior" parent="Vector.BottomSheet.Dark">
+        <item name="android:textColorPrimary">@color/text_color_primary_senior</item>
+        <item name="android:textColorSecondary">@color/text_color_secondary_senior</item>
+        <!-- Default color for text View -->
+        <item name="android:textColorTertiary">@color/text_color_tertiary_senior</item>
+        <item name="android:textColorLink">@color/link_color_dark</item>
+        <!-- Accent color -->
+        <item name="android:colorAccent">@color/accent_senior</item>
+        <item name="colorAccent">@color/accent_senior</item>
+    </style>
+
+    <style name="Vector.BottomSheet.Senior.Light" parent="Vector.BottomSheet.Light">
+        <!-- Accent color -->
+        <item name="android:colorAccent">@color/accent_senior</item>
+        <item name="colorAccent">@color/accent_senior</item>
+    </style>
+
+    <style name="VectorButtonStyleOutlined.Senior">
+        <item name="strokeColor">@color/button_background_tint_selector_senior</item>
+    </style>
+
+</resources>

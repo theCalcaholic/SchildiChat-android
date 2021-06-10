@@ -48,6 +48,7 @@
         <item>@string/sc_dark_theme</item>
         <item>@string/sc_colored_theme</item>
         <item>@string/sc_dark_colored_theme</item>
+        <item>@string/sc_senior_default_theme</item>
     </string-array>
 
     <string-array name="theme_values">
@@ -62,6 +63,7 @@
         <item>sc_dark</item>
         <item>sc_colored</item>
         <item>sc_dark_colored</item>
+        <item>senior_default</item>
     </string-array>
 
     <!-- media saving choice list -->

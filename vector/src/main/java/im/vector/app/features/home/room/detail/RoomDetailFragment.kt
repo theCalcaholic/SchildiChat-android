@@ -1619,13 +1619,15 @@ class RoomDetailFragment @Inject constructor(
 
     override fun onEventLongClicked(informationData: MessageInformationData, messageContent: Any?, view: View): Boolean {
         view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
-        val roomId = roomDetailArgs.roomId
 
-        this.view?.hideKeyboard()
 
-        MessageActionsBottomSheet
-                .newInstance(roomId, informationData)
-                .show(requireActivity().supportFragmentManager, "MESSAGE_CONTEXTUAL_ACTIONS")
+        // TODO: Make ui element configurable
+        //val roomId = roomDetailArgs.roomId
+        //this.view?.hideKeyboard()
+
+        // MessageActionsBottomSheet
+        //         .newInstance(roomId, informationData)
+        //         .show(requireActivity().supportFragmentManager, "MESSAGE_CONTEXTUAL_ACTIONS")
 
         return true
     }

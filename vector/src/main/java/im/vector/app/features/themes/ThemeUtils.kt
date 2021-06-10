@@ -53,6 +53,7 @@ object ThemeUtils {
     private const val THEME_SC_DARK_VALUE = "sc_dark"
     private const val THEME_SC_COLORED_VALUE = "sc_colored"
     private const val THEME_SC_DARK_COLORED_VALUE = "sc_dark_colored"
+    private const val THEME_SENIOR_DEFAULT_VALUE = "senior_default"
 
 
     private var currentLightTheme = AtomicReference<String>(null)
@@ -170,11 +171,11 @@ object ThemeUtils {
         val currentTheme = this.currentLightTheme.get()
         return if (currentTheme == null) {
             val prefs = DefaultSharedPreferences.getInstance(context)
-            var themeFromPref = prefs.getString(APPLICATION_THEME_KEY, THEME_SC_LIGHT_VALUE) ?: THEME_SC_LIGHT_VALUE
+            var themeFromPref = prefs.getString(APPLICATION_THEME_KEY, THEME_SENIOR_DEFAULT_VALUE) ?: THEME_SENIOR_DEFAULT_VALUE
             if (themeFromPref == "status") {
                 // Migrate to the default theme
-                themeFromPref = THEME_LIGHT_VALUE
-                prefs.edit { putString(APPLICATION_THEME_KEY, THEME_LIGHT_VALUE) }
+                themeFromPref = THEME_SENIOR_DEFAULT_VALUE
+                prefs.edit { putString(APPLICATION_THEME_KEY, THEME_SENIOR_DEFAULT_VALUE) }
             }
             this.currentLightTheme.set(themeFromPref)
             themeFromPref
@@ -197,8 +198,8 @@ object ThemeUtils {
             var themeFromPref = prefs.getString(APPLICATION_DARK_THEME_KEY, THEME_SC_DARK_VALUE) ?: THEME_SC_DARK_VALUE
             if (themeFromPref == "status") {
                 // Migrate to light theme, which is the closest theme
-                themeFromPref = THEME_LIGHT_VALUE
-                prefs.edit { putString(APPLICATION_DARK_THEME_KEY, THEME_LIGHT_VALUE) }
+                themeFromPref = THEME_SENIOR_DEFAULT_VALUE
+                prefs.edit { putString(APPLICATION_DARK_THEME_KEY, THEME_SENIOR_DEFAULT_VALUE) }
             }
             this.currentDarkTheme.set(themeFromPref)
             themeFromPref
@@ -245,6 +246,7 @@ object ThemeUtils {
         currentLightTheme.set(aLightTheme)
         currentDarkTheme.set(aDarkTheme)
         val aTheme = if (useDarkTheme(context)) aDarkTheme else aLightTheme
+        Timber.i("New theme is: $aTheme")
         context.setTheme(
                 when (aTheme) {
                     //SYSTEM_THEME_VALUE -> if (isSystemDarkTheme(context.resources)) R.style.AppTheme_Dark else R.style.AppTheme_Light
@@ -256,7 +258,8 @@ object ThemeUtils {
                     THEME_SC_DARK_VALUE -> R.style.AppTheme_SC_Dark
                     THEME_SC_COLORED_VALUE -> R.style.AppTheme_SC_Colored
                     THEME_SC_DARK_COLORED_VALUE -> R.style.AppTheme_SC_Dark_Colored
-                    else               -> R.style.AppTheme_Light
+                    THEME_SENIOR_DEFAULT_VALUE -> R.style.AppTheme_Senior_Default
+                    else               -> R.style.AppTheme_SC_Dark //R.style.AppTheme_Light
                 }
         )
 
@@ -265,6 +268,7 @@ object ThemeUtils {
     }
 
     fun setApplicationLightTheme(context: Context, theme: String) {
+        Timber.i("Selecting light theme $theme")
         setApplicationTheme(context, theme, getApplicationDarkTheme(context))
     }
 
@@ -288,6 +292,7 @@ object ThemeUtils {
             THEME_SC_DARK_VALUE     -> activity.setTheme(otherThemes.sc_dark)
             THEME_SC_COLORED_VALUE     -> activity.setTheme(otherThemes.sc_colored)
             THEME_SC_DARK_COLORED_VALUE     -> activity.setTheme(otherThemes.sc_dark_colored)
+            THEME_SENIOR_DEFAULT_VALUE -> activity.setTheme(otherThemes.senior_default)
         }
 
         mColorByAttr.clear()

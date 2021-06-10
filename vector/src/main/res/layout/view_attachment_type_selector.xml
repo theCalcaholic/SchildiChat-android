@@ -23,6 +23,7 @@
             android:weightSum="3">
 
             <LinearLayout
+                android:id="@+id/attachmentCameraButtonLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -45,6 +46,7 @@
 
 
             <LinearLayout
+                android:id="@+id/attachmentGalleryButtonLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -67,6 +69,7 @@
 
 
             <LinearLayout
+                android:id="@+id/attachmentFileButtonLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -98,6 +101,7 @@
             android:weightSum="3">
 
             <LinearLayout
+                android:id="@+id/attachmentAudioButtonLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -120,6 +124,7 @@
 
 
             <LinearLayout
+                android:id="@+id/attachmentContactButtonLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -142,6 +147,7 @@
 
 
             <LinearLayout
+                android:id="@+id/attachmentStickersButtonLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

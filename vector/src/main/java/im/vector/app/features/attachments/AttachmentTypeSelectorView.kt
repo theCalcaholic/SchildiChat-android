@@ -25,6 +25,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
+import android.view.ViewParent
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
 import android.view.animation.OvershootInterpolator
@@ -43,6 +44,7 @@ import im.vector.app.core.utils.PERMISSIONS_FOR_PICKING_CONTACT
 import im.vector.app.core.utils.PERMISSIONS_FOR_TAKING_PHOTO
 import im.vector.app.databinding.ViewAttachmentTypeSelectorBinding
 import im.vector.app.features.attachments.AttachmentTypeSelectorView.Callback
+import java.lang.AssertionError
 import kotlin.math.max
 
 private const val ANIMATION_DURATION = 250
@@ -64,6 +66,7 @@ class AttachmentTypeSelectorView(context: Context,
 
     private val views: ViewAttachmentTypeSelectorBinding
 
+    private var activeViews: List<LinearLayout>
     private var anchor: View? = null
 
     init {
@@ -75,6 +78,11 @@ class AttachmentTypeSelectorView(context: Context,
         views.attachmentStickersButton.configure(Type.STICKER)
         views.attachmentAudioButton.configure(Type.AUDIO)
         views.attachmentContactButton.configure(Type.CONTACT)
+
+        activeViews = listOf(views.attachmentGalleryButtonLayout, views.attachmentCameraButtonLayout)
+
+        updateAttachmentOptionsVisibility()
+
         width = LinearLayout.LayoutParams.MATCH_PARENT
         height = LinearLayout.LayoutParams.WRAP_CONTENT
         animationStyle = 0
@@ -83,6 +91,39 @@ class AttachmentTypeSelectorView(context: Context,
         inputMethodMode = INPUT_METHOD_NOT_NEEDED
         isFocusable = true
         isTouchable = true
+    }
+
+    fun updateAttachmentOptionsVisibility() {
+
+
+        val viewList = listOf(
+                views.attachmentGalleryButtonLayout,
+                views.attachmentCameraButtonLayout,
+                views.attachmentFileButtonLayout,
+                views.attachmentStickersButtonLayout,
+                views.attachmentAudioButtonLayout,
+                views.attachmentContactButtonLayout)
+
+        val parents = HashMap<ViewParent, Int?>()
+        for (v: LinearLayout in viewList) {
+            val parent = v.parent
+            if (! parents.containsKey(parent)) {
+                parents[parent] = 0
+            }
+            if (activeViews.contains(v)) {
+                parents[parent]!!.plus(1)
+            } else {
+                v.visibility = View.GONE
+            }
+
+
+        }
+
+        for(p: ViewParent in parents.keys) {
+            if (p !is LinearLayout)
+                throw AssertionError("An unexpected error occurred")
+            p.weightSum = parents[p]!!.toFloat()
+        }
     }
 
     fun show(anchor: View, isKeyboardOpen: Boolean) {

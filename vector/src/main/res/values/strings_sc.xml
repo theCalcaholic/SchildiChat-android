@@ -32,6 +32,7 @@
     <string name="sc_dark_theme">SC Dark</string>
     <string name="sc_colored_theme">SC Black, colored bubbles</string>
     <string name="sc_dark_colored_theme">SC Dark, colored bubbles</string>
+    <string name="sc_senior_default_theme">Default Senior friendly Theme</string>
 
     <string name="bubble_style">Message bubbles</string>
     <string name="bubble_style_none">None</string>
