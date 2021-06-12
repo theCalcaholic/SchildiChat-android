@@ -101,7 +101,7 @@ class HomeDetailFragment @Inject constructor(
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
-        menu.findItem(R.id.menu_home_mark_all_as_read).isVisible = hasUnreadRooms
+        menu.findItem(R.id.menu_home_mark_all_as_read).isVisible = false
         super.onPrepareOptionsMenu(menu)
     }
 
