@@ -21,7 +21,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import com.airbnb.epoxy.EpoxyAttribute
@@ -36,6 +36,7 @@ import im.vector.app.core.ui.views.ShieldImageView
 import im.vector.app.features.home.AvatarRenderer
 import org.matrix.android.sdk.api.crypto.RoomEncryptionTrustLevel
 import org.matrix.android.sdk.api.util.MatrixItem
+import org.w3c.dom.Text
 
 @EpoxyModelClass(layout = R.layout.item_room)
 abstract class RoomSummaryItem : VectorEpoxyModel<RoomSummaryItem.Holder>() {
@@ -61,19 +62,50 @@ abstract class RoomSummaryItem : VectorEpoxyModel<RoomSummaryItem.Holder>() {
     @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash) var itemLongClickListener: View.OnLongClickListener? = null
     @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash) var itemClickListener: View.OnClickListener? = null
     @EpoxyAttribute var showSelected: Boolean = false
+    @EpoxyAttribute var showEventPreview: Boolean = false
 
     override fun bind(holder: Holder) {
         super.bind(holder)
+
+        // TODO: Make configurable via learn path
+        val unreadCounterBadgeView: UnreadCounterBadgeView
+        val typingView: TextView
+        val titleView: TextView
+        if (showEventPreview) {
+            listOf(
+                    holder.nameViewNoEventPreview,
+                    holder.unreadCounterBadgeViewNoEventPreview,
+                    holder.typingViewNoEventPreview
+            ).forEach(holder.rootView::removeView)
+
+            unreadCounterBadgeView = holder.unreadCounterBadgeViewWithEventPreview
+            typingView = holder.typingViewWithEventPreview
+            titleView = holder.nameViewWithEventPreview
+
+            holder.lastEventView.text = lastFormattedEvent
+            holder.lastEventView.isInvisible = typingView.isVisible
+        } else {
+            listOf(
+                    holder.lastEventView,
+                    holder.nameViewWithEventPreview,
+                    holder.unreadCounterBadgeViewWithEventPreview,
+                    holder.typingViewWithEventPreview
+            ).forEach(holder.rootView::removeView)
+
+            unreadCounterBadgeView = holder.unreadCounterBadgeViewNoEventPreview
+            typingView = holder.typingViewNoEventPreview
+            titleView = holder.nameViewNoEventPreview
+        }
+
         holder.rootView.setOnClickListener(itemClickListener)
         holder.rootView.setOnLongClickListener {
             it.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
             itemLongClickListener?.onLongClick(it) ?: false
         }
-        holder.titleView.text = matrixItem.getBestName()
+        titleView.text = matrixItem.getBestName()
         holder.lastEventTimeView.text = lastEventTime
-        holder.lastEventView.text = lastFormattedEvent
         // SC-TODO: once we count unimportant unread messages, pass that as counter - for now, unreadIndentIndicator is enough, so pass 0 to the badge instead
-        holder.unreadCounterBadgeView.render(UnreadCounterBadgeView.State(unreadNotificationCount, showHighlighted, 0, markedUnread))
+        unreadCounterBadgeView.render(UnreadCounterBadgeView.State(unreadNotificationCount, showHighlighted, 0, markedUnread))
         holder.unreadIndentIndicator.isVisible = hasUnreadMessage
         holder.draftView.isVisible = hasDraft
         avatarRenderer.render(matrixItem, holder.avatarImageView)
@@ -81,8 +113,7 @@ abstract class RoomSummaryItem : VectorEpoxyModel<RoomSummaryItem.Holder>() {
         holder.roomAvatarPublicDecorationImageView.isVisible = izPublic
         holder.roomAvatarFailSendingImageView.isVisible = hasFailedSending
         renderSelection(holder, showSelected)
-        holder.typingView.setTextOrHide(typingMessage)
-        holder.lastEventView.isInvisible = holder.typingView.isVisible
+        typingView.setTextOrHide(typingMessage)
     }
 
     override fun unbind(holder: Holder) {
@@ -104,12 +135,11 @@ abstract class RoomSummaryItem : VectorEpoxyModel<RoomSummaryItem.Holder>() {
         }
     }
 
-    class Holder : VectorEpoxyHolder() {
-        val titleView by bind<TextView>(R.id.roomNameView)
-        val unreadCounterBadgeView by bind<UnreadCounterBadgeView>(R.id.roomUnreadCounterBadgeView)
+    class Holder() : VectorEpoxyHolder() {
+        val unreadCounterBadgeViewWithEventPreview by bind<UnreadCounterBadgeView>(R.id.roomUnreadCounterBadgeView)
         val unreadIndentIndicator by bind<View>(R.id.roomUnreadIndicator)
         val lastEventView by bind<TextView>(R.id.roomLastEventView)
-        val typingView by bind<TextView>(R.id.roomTypingView)
+        val typingViewWithEventPreview by bind<TextView>(R.id.roomTypingView)
         val draftView by bind<ImageView>(R.id.roomDraftBadge)
         val lastEventTimeView by bind<TextView>(R.id.roomLastEventTimeView)
         val avatarCheckedImageView by bind<ImageView>(R.id.roomAvatarCheckedImageView)
@@ -118,5 +148,16 @@ abstract class RoomSummaryItem : VectorEpoxyModel<RoomSummaryItem.Holder>() {
         val roomAvatarPublicDecorationImageView by bind<ImageView>(R.id.roomAvatarPublicDecorationImageView)
         val roomAvatarFailSendingImageView by bind<ImageView>(R.id.roomAvatarFailSendingImageView)
         val rootView by bind<ViewGroup>(R.id.itemRoomLayout)
+        val nameViewWithEventPreview by bind<TextView>(R.id.roomNameView)
+        //val roomAvatarContainer by bind<FrameLayout>(R.id.roomAvatarContainer)
+
+        val nameViewNoEventPreview by bind<TextView>(R.id.roomNameViewNoEventPreview)
+        val unreadCounterBadgeViewNoEventPreview by bind<UnreadCounterBadgeView>(R.id.roomUnreadCounterBadgeViewNoEventPreview)
+        val typingViewNoEventPreview by bind<TextView>(R.id.roomTypingViewNoEventView)
+
+//        var nameView = nameViewNoEventPreview
+//        var unreadCounterBadgeView = unreadCounterBadgeViewNoEventPreview
+//        var typingView = typingViewNoEventPreview
+
     }
 }
