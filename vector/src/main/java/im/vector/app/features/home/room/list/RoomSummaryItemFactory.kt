@@ -96,7 +96,8 @@ class RoomSummaryItemFactory @Inject constructor(private val displayableEventFor
             roomSummary: RoomSummary,
             selectedRoomIds: Set<String>,
             onClick: ((RoomSummary) -> Unit)?,
-            onLongClick: ((RoomSummary) -> Boolean)?
+            // used upstream
+            @Suppress("UNUSED_PARAMETER") onLongClick: ((RoomSummary) -> Boolean)?
     ): VectorEpoxyModel<*> {
         val unreadCount = roomSummary.notificationCount
         val showHighlighted = roomSummary.highlightCount > 0
@@ -127,9 +128,9 @@ class RoomSummaryItemFactory @Inject constructor(private val displayableEventFor
                 .hasUnreadMessage(roomSummary.scIsUnread(scSdkPreferences))
                 .markedUnread(roomSummary.markedUnread)
                 .hasDraft(roomSummary.userDrafts.isNotEmpty())
-                .itemLongClickListener { _ ->
-                    onLongClick?.invoke(roomSummary) ?: false
-                }
+//                .itemLongClickListener { _ ->
+//                    onLongClick?.invoke(roomSummary) ?: false
+//                }
                 .itemClickListener(
                         DebouncedClickListener({
                             onClick?.invoke(roomSummary)
