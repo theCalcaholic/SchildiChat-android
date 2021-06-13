@@ -100,7 +100,7 @@
         android:layout_height="0dp"
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/option_send_files"
-        android:src="@drawable/ic_attachment"
+        android:src="@drawable/ic_camera"
         android:tint="?android:textColorHint"
         tools:ignore="MissingConstraints" />
 
