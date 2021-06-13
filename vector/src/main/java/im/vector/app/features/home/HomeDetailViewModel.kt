@@ -158,7 +158,7 @@ class HomeDetailViewModel @AssistedInject constructor(@Assisted initialState: Ho
                     roomSummaryQueryParams {
                         memberships = Membership.activeMemberships()
                     },
-                    sortOrder = EnumSet.noneOf(RoomSortOrder::class.java)
+                    // sortOrder = EnumSet.noneOf(RoomSortOrder::class.java)
             ).asObservable()
         }
                 .observeOn(Schedulers.computation())
