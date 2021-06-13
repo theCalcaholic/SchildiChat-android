@@ -16,6 +16,14 @@
 
 package im.vector.app.features.home
 
+// import im.vector.app.features.grouplist.GroupListFragment
+
+import android.content.Context
+import android.content.Intent
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,25 +33,25 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import im.vector.app.BuildConfig
 import im.vector.app.R
+import im.vector.app.core.epoxy.onClick
 import im.vector.app.core.extensions.observeK
-import im.vector.app.core.extensions.replaceChildFragment
 import im.vector.app.core.platform.VectorBaseFragment
 import im.vector.app.core.utils.startSharePlainTextIntent
 import im.vector.app.databinding.FragmentHomeDrawerBinding
-// import im.vector.app.features.grouplist.GroupListFragment
+import im.vector.app.features.call.conference.JitsiService
 import im.vector.app.features.login.PromptSimplifiedModeActivity
 import im.vector.app.features.settings.VectorPreferences
 import im.vector.app.features.settings.VectorSettingsActivity
-import im.vector.app.features.spaces.SpaceListFragment
 import im.vector.app.features.usercode.UserCodeActivity
 import im.vector.app.features.workers.signout.SignOutUiWorker
-
 import org.matrix.android.sdk.api.session.Session
 import org.matrix.android.sdk.api.util.toMatrixItem
+import timber.log.Timber
 import javax.inject.Inject
 
 class HomeDrawerFragment @Inject constructor(
         private val session: Session,
+        private val jitsiService: JitsiService,
         private val vectorPreferences: VectorPreferences,
         private val avatarRenderer: AvatarRenderer
 ) : VectorBaseFragment<FragmentHomeDrawerBinding>() {
@@ -63,6 +71,7 @@ class HomeDrawerFragment @Inject constructor(
 //        if (savedInstanceState == null) {
 //            replaceChildFragment(R.id.homeDrawerGroupListContainer, SpaceListFragment::class.java)
 //        }
+        setupSupportButton(requireContext())
         session.getUserLive(session.myUserId).observeK(viewLifecycleOwner) { optionalUser ->
             val user = optionalUser?.getOrNull()
             if (user != null) {
@@ -128,5 +137,30 @@ class HomeDrawerFragment @Inject constructor(
         vectorPreferences.scPreferenceUpdate()
         // SC-Easy mode prompt
         PromptSimplifiedModeActivity.showIfRequired(requireContext(), vectorPreferences)
+    }
+
+    fun setupSupportButton(c: Context) {
+        val pkgManager = c.packageManager
+        var appInfo: ApplicationInfo? = null
+        try {
+            appInfo = pkgManager.getApplicationInfo("org.jitsi.meet", PackageManager.GET_META_DATA)
+        } catch (e: PackageManager.NameNotFoundException) {
+            Timber.i("Could not find package org.jitsi.meet")
+        }
+        if (appInfo == null) {
+            views.getSupportButton.alpha = 0.25F
+            views.getSupportHeader.text = getString(R.string.get_support_feature_jitsi_missing)
+        } else {
+            views.getSupportHeader.text = getString(R.string.get_support)
+            views.getSupportButton.setColorFilter(Color.argb(0, 0, 0, 0))
+            views.getSupportButton.setImageDrawable(pkgManager.getApplicationIcon("org.jitsi.meet"))
+            views.getSupportButton.onClick {
+                // TODO: Respect user settings
+
+                val jitsiConferenceURI = "https://meet.jit.si/${java.util.UUID.randomUUID()}"
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(jitsiConferenceURI))
+                startActivity(browserIntent)
+            }
+        }
     }
 }

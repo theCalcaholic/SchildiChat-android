@@ -39,6 +39,9 @@
         android:name="android.permission.WRITE_CALENDAR"
         tools:node="remove" />
 
+    <!-- Required for the 'get support' feature -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
+
     <!-- Jitsi SDK is now API23+ -->
     <uses-sdk tools:overrideLibrary="org.jitsi.meet.sdk,com.oney.WebRTCModule,com.learnium.RNDeviceInfo,com.reactnativecommunity.asyncstorage,com.ocetnik.timer,com.calendarevents,com.reactnativecommunity.netinfo,com.kevinresol.react_native_default_preference,com.rnimmersive,com.corbt.keepawake,com.BV.LinearGradient,com.horcrux.svg" />
 

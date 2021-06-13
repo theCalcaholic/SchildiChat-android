@@ -3399,4 +3399,6 @@
     <string name="this_space_has_no_rooms_admin">Some rooms may be hidden because they’re private and you need an invite.</string>
 
     <string name="unnamed_room">Unnamed Room</string>
+    <string name="get_support">Tap to get help</string>
+    <string name="get_support_feature_jitsi_missing">Please install Jitsi to enable the \'get support\' feature</string>
 </resources>
