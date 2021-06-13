@@ -117,7 +117,7 @@ class SpacesListViewModel @AssistedInject constructor(@Assisted initialState: Sp
                     this.activeSpaceFilter = ActiveSpaceFilter.ActiveSpace(null).takeIf {
                         vectorPreferences.labsSpacesOnlyOrphansInHome()
                     } ?: ActiveSpaceFilter.None
-                }, sortOrder = EnumSet.of(RoomSortOrder.UNREAD) //EnumSet.noneOf(RoomSortOrder::class.java)
+                }//, sortOrder = EnumSet.of(RoomSortOrder.ACTIVITY) // EnumSet.noneOf(RoomSortOrder::class.java)
         ).asObservable()
                 .throttleFirst(300, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.computation())

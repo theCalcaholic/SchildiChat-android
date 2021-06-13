@@ -87,7 +87,7 @@ class UnreadMessagesSharedViewModel @AssistedInject constructor(@Assisted initia
                 roomSummaryQueryParams {
                     this.memberships = listOf(Membership.JOIN)
                     this.activeSpaceFilter = ActiveSpaceFilter.ActiveSpace(null)
-                }, sortOrder = EnumSet.noneOf(RoomSortOrder::class.java)
+                }// , sortOrder = EnumSet.noneOf(RoomSortOrder::class.java)
         ).asObservable()
                 .throttleFirst(300, TimeUnit.MILLISECONDS)
                 .execute {
@@ -120,7 +120,7 @@ class UnreadMessagesSharedViewModel @AssistedInject constructor(@Assisted initia
                     session.getPagedRoomSummariesLive(
                             roomSummaryQueryParams {
                                 this.memberships = Membership.activeMemberships()
-                            }, sortOrder = EnumSet.noneOf(RoomSortOrder::class.java)
+                            }// , sortOrder = EnumSet.noneOf(RoomSortOrder::class.java)
                     ).asObservable()
                             .throttleFirst(300, TimeUnit.MILLISECONDS)
                             .observeOn(Schedulers.computation())

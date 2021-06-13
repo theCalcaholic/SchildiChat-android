@@ -180,14 +180,14 @@ interface RoomService {
      */
     fun getPagedRoomSummariesLive(queryParams: RoomSummaryQueryParams,
                                   pagedListConfig: PagedList.Config = defaultPagedListConfig,
-                                  sortOrder: EnumSet<RoomSortOrder> = EnumSet.of(RoomSortOrder.UNREAD, RoomSortOrder.ACTIVITY)): LiveData<PagedList<RoomSummary>>
+                                  sortOrder: EnumSet<RoomSortOrder> = EnumSet.of(RoomSortOrder.ACTIVITY)): LiveData<PagedList<RoomSummary>>
 
     /**
      * TODO Doc
      */
     fun getFilteredPagedRoomSummariesLive(queryParams: RoomSummaryQueryParams,
                                           pagedListConfig: PagedList.Config = defaultPagedListConfig,
-                                          sortOrder: EnumSet<RoomSortOrder> = EnumSet.of(RoomSortOrder.UNREAD, RoomSortOrder.ACTIVITY)): UpdatableLivePageResult
+                                          sortOrder: EnumSet<RoomSortOrder> = EnumSet.of(RoomSortOrder.ACTIVITY)): UpdatableLivePageResult
 
     /**
      * TODO Doc

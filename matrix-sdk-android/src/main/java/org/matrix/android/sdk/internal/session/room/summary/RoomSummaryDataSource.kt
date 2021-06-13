@@ -83,6 +83,7 @@ internal class RoomSummaryDataSource @Inject constructor(@SessionDatabase privat
     }
 
     fun getRoomSummaries(queryParams: RoomSummaryQueryParams): List<RoomSummary> {
+        //val queryParamsUnread = queryParams.copy(roomCategoryFilter = RoomCategoryFilter.ONLY_WITH_NOTIFICATIONS)
         return monarchy.fetchAllMappedSync(
                 { roomSummariesQuery(it, queryParams) },
                 { roomSummaryMapper.map(it) }
@@ -90,6 +91,7 @@ internal class RoomSummaryDataSource @Inject constructor(@SessionDatabase privat
     }
 
     fun getRoomSummariesLive(queryParams: RoomSummaryQueryParams): LiveData<List<RoomSummary>> {
+        //val queryParamsUnread = queryParams.copy(roomCategoryFilter = RoomCategoryFilter.ONLY_WITH_NOTIFICATIONS)
         return monarchy.findAllMappedWithChanges(
                 {
                     roomSummariesQuery(it, queryParams)
@@ -160,6 +162,7 @@ internal class RoomSummaryDataSource @Inject constructor(@SessionDatabase privat
     }
 
     private fun breadcrumbsQuery(realm: Realm, queryParams: RoomSummaryQueryParams): RealmQuery<RoomSummaryEntity> {
+        //val queryParamsUnread = queryParams.copy(roomCategoryFilter = RoomCategoryFilter.ONLY_WITH_NOTIFICATIONS)
         return roomSummariesQuery(realm, queryParams)
                 .greaterThan(RoomSummaryEntityFields.BREADCRUMBS_INDEX, RoomSummary.NOT_IN_BREADCRUMBS)
                 .sort(RoomSummaryEntityFields.BREADCRUMBS_INDEX)
@@ -168,6 +171,7 @@ internal class RoomSummaryDataSource @Inject constructor(@SessionDatabase privat
     fun getSortedPagedRoomSummariesLive(queryParams: RoomSummaryQueryParams,
                                         pagedListConfig: PagedList.Config,
                                         sortOrder: EnumSet<RoomSortOrder>): LiveData<PagedList<RoomSummary>> {
+        //val queryParamsUnread = queryParams.copy(roomCategoryFilter = RoomCategoryFilter.ONLY_WITH_NOTIFICATIONS)
         val realmDataSourceFactory = monarchy.createDataSourceFactory { realm ->
             roomSummariesQuery(realm, queryParams).process(sortOrder)
         }
@@ -183,6 +187,7 @@ internal class RoomSummaryDataSource @Inject constructor(@SessionDatabase privat
     fun getUpdatablePagedRoomSummariesLive(queryParams: RoomSummaryQueryParams,
                                            pagedListConfig: PagedList.Config,
                                            sortOrder: EnumSet<RoomSortOrder>): UpdatableLivePageResult {
+        //val queryParamsUnread = queryParams.copy(roomCategoryFilter = RoomCategoryFilter.ONLY_WITH_NOTIFICATIONS)
         val realmDataSourceFactory = monarchy.createDataSourceFactory { realm ->
             roomSummariesQuery(realm, queryParams).process(sortOrder)
         }
@@ -227,6 +232,7 @@ internal class RoomSummaryDataSource @Inject constructor(@SessionDatabase privat
 
     fun getNotificationCountForRooms(queryParams: RoomSummaryQueryParams, preferenceProvider: RoomSummary.RoomSummaryPreferenceProvider): RoomAggregateNotificationCount {
         var notificationCount: RoomAggregateNotificationCount? = null
+        //val queryParamsUnread = queryParams.copy(roomCategoryFilter = RoomCategoryFilter.ONLY_WITH_NOTIFICATIONS)
         monarchy.doWithRealm { realm ->
             val roomSummariesQuery = roomSummariesQuery(realm, queryParams)
             val notifCount = roomSummariesQuery.sum(RoomSummaryEntityFields.NOTIFICATION_COUNT).toInt()
@@ -251,6 +257,10 @@ internal class RoomSummaryDataSource @Inject constructor(@SessionDatabase privat
         query.process(RoomSummaryEntityFields.CANONICAL_ALIAS, queryParams.canonicalAlias)
         query.process(RoomSummaryEntityFields.MEMBERSHIP_STR, queryParams.memberships)
         query.equalTo(RoomSummaryEntityFields.IS_HIDDEN_FROM_USER, false)
+//        query.beginGroup()
+//                .greaterThan(RoomSummaryEntityFields.NOTIFICATION_COUNT, 0).or()
+//                .equalTo(RoomSummaryEntityFields.MARKED_UNREAD, true)
+//                .endGroup()
 
         queryParams.roomCategoryFilter?.let {
             when (it) {
@@ -259,6 +269,9 @@ internal class RoomSummaryDataSource @Inject constructor(@SessionDatabase privat
                 RoomCategoryFilter.ONLY_WITH_NOTIFICATIONS -> query.beginGroup()
                         .greaterThan(RoomSummaryEntityFields.NOTIFICATION_COUNT, 0).or()
                         .equalTo(RoomSummaryEntityFields.MARKED_UNREAD, true).endGroup()
+                RoomCategoryFilter.ONLY_WITHOUT_NOTIFICATIONS -> query.beginGroup()
+                        .lessThan(RoomSummaryEntityFields.NOTIFICATION_COUNT, 1).and()
+                        .equalTo(RoomSummaryEntityFields.MARKED_UNREAD, false).endGroup()
                 RoomCategoryFilter.ALL -> {
                     // nop
                 }
@@ -288,6 +301,9 @@ internal class RoomSummaryDataSource @Inject constructor(@SessionDatabase privat
             RoomCategoryFilter.ONLY_WITH_NOTIFICATIONS -> query.beginGroup()
                     .greaterThan(RoomSummaryEntityFields.NOTIFICATION_COUNT, 0).or()
                     .equalTo(RoomSummaryEntityFields.MARKED_UNREAD, true).endGroup()
+            RoomCategoryFilter.ONLY_WITHOUT_NOTIFICATIONS -> query.beginGroup()
+                    .lessThan(RoomSummaryEntityFields.NOTIFICATION_COUNT, 1).and()
+                    .equalTo(RoomSummaryEntityFields.MARKED_UNREAD, false).endGroup()
             RoomCategoryFilter.ALL -> Unit // nop
         }
 

@@ -47,8 +47,12 @@ internal fun RealmQuery<RoomSummaryEntity>.process(sortOrder: EnumSet<RoomSortOr
     }
 
     Timber.i("fields size: ${fields.size}")
-    Timber.i("sortOrders size; ${sortOrders.size}")
+    Timber.i("fields: ${fields.joinToString(", ")}")
+    Timber.i("sortOrders size: ${sortOrders.size}")
 
+//    fields.zip(sortOrders).forEach{pair ->
+//        sort(pair.first, pair.second)
+//    }
     if (fields.size != 0)
         sort(fields.toTypedArray(), sortOrders.toTypedArray())
 

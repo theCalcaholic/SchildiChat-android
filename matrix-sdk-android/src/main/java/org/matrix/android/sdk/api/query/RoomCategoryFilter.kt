@@ -20,5 +20,6 @@ enum class RoomCategoryFilter {
     ONLY_DM,
     ONLY_ROOMS,
     ONLY_WITH_NOTIFICATIONS,
+    ONLY_WITHOUT_NOTIFICATIONS,
     ALL
 }
