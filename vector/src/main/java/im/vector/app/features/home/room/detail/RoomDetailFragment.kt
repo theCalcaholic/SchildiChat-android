@@ -79,7 +79,6 @@ import im.vector.app.core.dialogs.withColoredButton
 import im.vector.app.core.epoxy.LayoutManagerStateRestorer
 import im.vector.app.core.extensions.cleanup
 import im.vector.app.core.extensions.exhaustive
-import im.vector.app.core.extensions.hideKeyboard
 import im.vector.app.core.extensions.registerStartForActivityResult
 import im.vector.app.core.extensions.setTextOrHide
 import im.vector.app.core.extensions.showKeyboard
@@ -135,7 +134,6 @@ import im.vector.app.features.home.room.detail.composer.TextComposerView
 import im.vector.app.features.home.room.detail.readreceipts.DisplayReadReceiptsBottomSheet
 import im.vector.app.features.home.room.detail.timeline.TimelineEventController
 import im.vector.app.features.home.room.detail.timeline.action.EventSharedAction
-import im.vector.app.features.home.room.detail.timeline.action.MessageActionsBottomSheet
 import im.vector.app.features.home.room.detail.timeline.action.MessageSharedActionViewModel
 import im.vector.app.features.home.room.detail.timeline.edithistory.ViewEditHistoryBottomSheet
 import im.vector.app.features.home.room.detail.timeline.helper.MatrixItemColorProvider
@@ -307,6 +305,8 @@ class RoomDetailFragment @Inject constructor(
     private val knownCallsViewHolder = KnownCallsViewHolder()
 
     private lateinit var emojiPopup: EmojiPopup
+    private lateinit var videoCallButton: MenuItem
+    private lateinit var voiceCallButton: MenuItem
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -414,6 +414,7 @@ class RoomDetailFragment @Inject constructor(
             handleShareData()
             handleSpaceShare()
         }
+
     }
 
     private fun acceptIncomingCall(event: RoomDetailViewEvents.DisplayAndAcceptCall) {
@@ -803,6 +804,7 @@ class RoomDetailFragment @Inject constructor(
             setOf(R.id.voice_call, R.id.video_call).forEach {
                 menu.findItem(it).icon?.alpha = if (callButtonsEnabled) 0xFF else 0x40
             }
+            setOf(R.id.voice_call, R.id.video_call).forEach { menu.findItem(it).isVisible = vectorPreferences.shouldShowCallButtons() }
 
             val matrixAppsMenuItem = menu.findItem(R.id.open_matrix_apps)
             val widgetsCount = state.activeRoomWidgets.invoke()?.size ?: 0
@@ -1291,6 +1293,7 @@ class RoomDetailFragment @Inject constructor(
             renderSubTitle(typingMessage, roomSummary.topic)
             views.roomToolbarDecorationImageView.render(roomSummary.roomEncryptionTrustLevel)
         }
+
     }
 
     private fun renderSubTitle(typingMessage: String?, topic: String) {
@@ -1621,7 +1624,7 @@ class RoomDetailFragment @Inject constructor(
         view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
 
 
-        // TODO: Make ui element configurable
+        // TODO: Make configurable via learn path
         //val roomId = roomDetailArgs.roomId
         //this.view?.hideKeyboard()
 

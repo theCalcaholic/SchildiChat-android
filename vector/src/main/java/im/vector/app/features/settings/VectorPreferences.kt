@@ -208,6 +208,9 @@ class VectorPreferences @Inject constructor(private val context: Context) {
 
         private const val TAKE_PHOTO_VIDEO_MODE = "TAKE_PHOTO_VIDEO_MODE"
 
+        // Learn path items
+        private const val SHOW_CALL_BUTTONS = "SHOW_CALL_BUTTONS"
+
         // Possible values for TAKE_PHOTO_VIDEO_MODE
         const val TAKE_PHOTO_VIDEO_MODE_ALWAYS_ASK = 0
         const val TAKE_PHOTO_VIDEO_MODE_PHOTO = 1
@@ -340,6 +343,11 @@ class VectorPreferences @Inject constructor(private val context: Context) {
         defaultPrefs.edit {
             putBoolean(DID_ASK_TO_ENABLE_SESSION_PUSH, true)
         }
+    }
+
+    // TODO: Make configurable via learn path
+    fun shouldShowCallButtons(): Boolean {
+        return defaultPrefs.getBoolean(SHOW_CALL_BUTTONS, false)
     }
 
     /**
