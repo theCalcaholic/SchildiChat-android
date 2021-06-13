@@ -30,16 +30,19 @@ import im.vector.app.core.platform.EmptyAction
 import im.vector.app.core.platform.EmptyViewEvents
 import im.vector.app.core.platform.VectorViewModel
 import im.vector.app.features.home.room.ScSdkPreferences
+import im.vector.app.features.home.room.list.RoomsSection
 import im.vector.app.features.settings.VectorPreferences
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import org.matrix.android.sdk.api.query.ActiveSpaceFilter
 import org.matrix.android.sdk.api.session.Session
+import org.matrix.android.sdk.api.session.room.Room
 import org.matrix.android.sdk.api.session.room.RoomSortOrder
 import org.matrix.android.sdk.api.session.room.model.Membership
 import org.matrix.android.sdk.api.session.room.roomSummaryQueryParams
 import org.matrix.android.sdk.api.session.room.summary.RoomAggregateNotificationCount
 import org.matrix.android.sdk.rx.asObservable
+import java.util.EnumSet
 import java.util.concurrent.TimeUnit
 
 data class UnreadMessagesState(
@@ -84,7 +87,7 @@ class UnreadMessagesSharedViewModel @AssistedInject constructor(@Assisted initia
                 roomSummaryQueryParams {
                     this.memberships = listOf(Membership.JOIN)
                     this.activeSpaceFilter = ActiveSpaceFilter.ActiveSpace(null)
-                }, sortOrder = RoomSortOrder.NONE
+                }, sortOrder = EnumSet.noneOf(RoomSortOrder::class.java)
         ).asObservable()
                 .throttleFirst(300, TimeUnit.MILLISECONDS)
                 .execute {
@@ -117,7 +120,7 @@ class UnreadMessagesSharedViewModel @AssistedInject constructor(@Assisted initia
                     session.getPagedRoomSummariesLive(
                             roomSummaryQueryParams {
                                 this.memberships = Membership.activeMemberships()
-                            }, sortOrder = RoomSortOrder.NONE
+                            }, sortOrder = EnumSet.noneOf(RoomSortOrder::class.java)
                     ).asObservable()
                             .throttleFirst(300, TimeUnit.MILLISECONDS)
                             .observeOn(Schedulers.computation())

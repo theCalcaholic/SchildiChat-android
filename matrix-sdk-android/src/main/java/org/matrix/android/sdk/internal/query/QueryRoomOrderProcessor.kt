@@ -18,20 +18,39 @@ package org.matrix.android.sdk.internal.query
 
 import io.realm.RealmQuery
 import io.realm.Sort
+import org.matrix.android.sdk.api.session.room.Room
 import org.matrix.android.sdk.api.session.room.RoomSortOrder
 import org.matrix.android.sdk.internal.database.model.RoomSummaryEntity
 import org.matrix.android.sdk.internal.database.model.RoomSummaryEntityFields
+import timber.log.Timber
+import java.util.EnumSet
 
-internal fun RealmQuery<RoomSummaryEntity>.process(sortOrder: RoomSortOrder): RealmQuery<RoomSummaryEntity> {
-    when (sortOrder) {
-        RoomSortOrder.NAME     -> {
-            sort(RoomSummaryEntityFields.DISPLAY_NAME, Sort.ASCENDING)
-        }
-        RoomSortOrder.ACTIVITY -> {
-            sort(RoomSummaryEntityFields.LAST_ACTIVITY_TIME, Sort.DESCENDING)
-        }
-        RoomSortOrder.NONE     -> {
-        }
+internal fun RealmQuery<RoomSummaryEntity>.process(sortOrder: EnumSet<RoomSortOrder>): RealmQuery<RoomSummaryEntity> {
+
+    val fields = mutableListOf<String>()
+    val sortOrders = mutableListOf<Sort>()
+
+    Timber.i("Sorting by: ${sortOrder.joinToString(", ")}")
+
+    if (sortOrder.contains(RoomSortOrder.UNREAD)) {
+        Timber.w("SORTING FOR UNREAD MSGS!")
+        fields.add(RoomSummaryEntityFields.HAS_UNREAD_MESSAGES)
+        sortOrders.add(Sort.DESCENDING)
     }
+    if (sortOrder.contains(RoomSortOrder.NAME)) {
+        fields.add(RoomSummaryEntityFields.DISPLAY_NAME)
+        sortOrders.add(Sort.ASCENDING)
+    }
+    if (sortOrder.contains(RoomSortOrder.ACTIVITY)) {
+        fields.add(RoomSummaryEntityFields.LAST_ACTIVITY_TIME)
+        sortOrders.add(Sort.DESCENDING)
+    }
+
+    Timber.i("fields size: ${fields.size}")
+    Timber.i("sortOrders size; ${sortOrders.size}")
+
+    if (fields.size != 0)
+        sort(fields.toTypedArray(), sortOrders.toTypedArray())
+
     return this
 }

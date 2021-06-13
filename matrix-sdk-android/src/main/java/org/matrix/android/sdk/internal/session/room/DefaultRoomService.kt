@@ -51,6 +51,7 @@ import org.matrix.android.sdk.internal.session.room.read.MarkAllRoomsReadTask
 import org.matrix.android.sdk.internal.session.room.summary.RoomSummaryDataSource
 import org.matrix.android.sdk.internal.session.user.accountdata.UpdateBreadcrumbsTask
 import org.matrix.android.sdk.internal.util.fetchCopied
+import java.util.EnumSet
 import javax.inject.Inject
 
 internal class DefaultRoomService @Inject constructor(
@@ -92,12 +93,12 @@ internal class DefaultRoomService @Inject constructor(
         return roomSummaryDataSource.getRoomSummariesLive(queryParams)
     }
 
-    override fun getPagedRoomSummariesLive(queryParams: RoomSummaryQueryParams, pagedListConfig: PagedList.Config, sortOrder: RoomSortOrder)
+    override fun getPagedRoomSummariesLive(queryParams: RoomSummaryQueryParams, pagedListConfig: PagedList.Config, sortOrder: EnumSet<RoomSortOrder>)
             : LiveData<PagedList<RoomSummary>> {
         return roomSummaryDataSource.getSortedPagedRoomSummariesLive(queryParams, pagedListConfig, sortOrder)
     }
 
-    override fun getFilteredPagedRoomSummariesLive(queryParams: RoomSummaryQueryParams, pagedListConfig: PagedList.Config, sortOrder: RoomSortOrder)
+    override fun getFilteredPagedRoomSummariesLive(queryParams: RoomSummaryQueryParams, pagedListConfig: PagedList.Config, sortOrder: EnumSet<RoomSortOrder>)
             : UpdatableLivePageResult {
         return roomSummaryDataSource.getUpdatablePagedRoomSummariesLive(queryParams, pagedListConfig, sortOrder)
     }

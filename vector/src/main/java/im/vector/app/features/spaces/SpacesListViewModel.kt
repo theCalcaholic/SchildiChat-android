@@ -50,6 +50,7 @@ import org.matrix.android.sdk.api.session.user.model.User
 import org.matrix.android.sdk.api.util.toMatrixItem
 import org.matrix.android.sdk.rx.asObservable
 import org.matrix.android.sdk.rx.rx
+import java.util.EnumSet
 import java.util.concurrent.TimeUnit
 
 class SpacesListViewModel @AssistedInject constructor(@Assisted initialState: SpaceListViewState,
@@ -116,7 +117,7 @@ class SpacesListViewModel @AssistedInject constructor(@Assisted initialState: Sp
                     this.activeSpaceFilter = ActiveSpaceFilter.ActiveSpace(null).takeIf {
                         vectorPreferences.labsSpacesOnlyOrphansInHome()
                     } ?: ActiveSpaceFilter.None
-                }, sortOrder = RoomSortOrder.NONE
+                }, sortOrder = EnumSet.of(RoomSortOrder.UNREAD) //EnumSet.noneOf(RoomSortOrder::class.java)
         ).asObservable()
                 .throttleFirst(300, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.computation())

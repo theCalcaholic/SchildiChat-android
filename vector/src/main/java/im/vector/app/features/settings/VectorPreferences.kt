@@ -325,7 +325,7 @@ class VectorPreferences @Inject constructor(private val context: Context) {
     }
 
     fun labAddNotificationTab(): Boolean {
-        return defaultPrefs.getBoolean(SETTINGS_LABS_UNREAD_NOTIFICATIONS_AS_TAB, true)
+        return defaultPrefs.getBoolean(SETTINGS_LABS_UNREAD_NOTIFICATIONS_AS_TAB, false)
     }
 
     fun failFast(): Boolean {

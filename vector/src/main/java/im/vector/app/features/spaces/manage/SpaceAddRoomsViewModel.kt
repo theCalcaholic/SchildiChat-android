@@ -42,6 +42,7 @@ import org.matrix.android.sdk.api.session.room.UpdatableLivePageResult
 import org.matrix.android.sdk.api.session.room.model.Membership
 import org.matrix.android.sdk.api.session.room.model.RoomType
 import org.matrix.android.sdk.api.session.room.roomSummaryQueryParams
+import java.util.EnumSet
 
 class AddRoomError(val errorList: Map<String, Throwable>) : Throwable() {
     override fun getLocalizedMessage(): String? {
@@ -74,7 +75,7 @@ class SpaceAddRoomsViewModel @AssistedInject constructor(
                         .setEnablePlaceholders(true)
                         .setPrefetchDistance(10)
                         .build(),
-                sortOrder = RoomSortOrder.NAME
+                sortOrder = EnumSet.of(RoomSortOrder.NAME)
         )
     }
 
@@ -94,7 +95,7 @@ class SpaceAddRoomsViewModel @AssistedInject constructor(
                         .setEnablePlaceholders(true)
                         .setPrefetchDistance(10)
                         .build(),
-                sortOrder = RoomSortOrder.NAME
+                sortOrder = EnumSet.of(RoomSortOrder.NAME)
         )
     }
 
@@ -114,7 +115,7 @@ class SpaceAddRoomsViewModel @AssistedInject constructor(
                         .setEnablePlaceholders(true)
                         .setPrefetchDistance(10)
                         .build(),
-                sortOrder = RoomSortOrder.NAME
+                sortOrder = EnumSet.of(RoomSortOrder.NAME)
         )
     }
 

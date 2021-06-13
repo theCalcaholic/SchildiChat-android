@@ -66,6 +66,7 @@ class RoomListViewModel @Inject constructor(
         fun updateForSpaceId(roomId: String?)
     }
 
+
     enum class SpaceFilterStrategy {
         /**
          * Filter the rooms if they are part of the current space (children and grand children).

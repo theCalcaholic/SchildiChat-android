@@ -43,6 +43,7 @@ import org.matrix.android.sdk.api.util.toMatrixItem
 import org.matrix.android.sdk.rx.asObservable
 import org.matrix.android.sdk.rx.rx
 import timber.log.Timber
+import java.util.EnumSet
 import java.util.concurrent.TimeUnit
 
 /**
@@ -157,7 +158,7 @@ class HomeDetailViewModel @AssistedInject constructor(@Assisted initialState: Ho
                     roomSummaryQueryParams {
                         memberships = Membership.activeMemberships()
                     },
-                    sortOrder = RoomSortOrder.NONE
+                    sortOrder = EnumSet.noneOf(RoomSortOrder::class.java)
             ).asObservable()
         }
                 .observeOn(Schedulers.computation())

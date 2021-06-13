@@ -51,6 +51,7 @@ import org.matrix.android.sdk.internal.database.query.where
 import org.matrix.android.sdk.internal.di.SessionDatabase
 import org.matrix.android.sdk.internal.query.process
 import org.matrix.android.sdk.internal.util.fetchCopyMap
+import java.util.EnumSet
 import javax.inject.Inject
 
 internal class RoomSummaryDataSource @Inject constructor(@SessionDatabase private val monarchy: Monarchy,
@@ -166,7 +167,7 @@ internal class RoomSummaryDataSource @Inject constructor(@SessionDatabase privat
 
     fun getSortedPagedRoomSummariesLive(queryParams: RoomSummaryQueryParams,
                                         pagedListConfig: PagedList.Config,
-                                        sortOrder: RoomSortOrder): LiveData<PagedList<RoomSummary>> {
+                                        sortOrder: EnumSet<RoomSortOrder>): LiveData<PagedList<RoomSummary>> {
         val realmDataSourceFactory = monarchy.createDataSourceFactory { realm ->
             roomSummariesQuery(realm, queryParams).process(sortOrder)
         }
@@ -181,7 +182,7 @@ internal class RoomSummaryDataSource @Inject constructor(@SessionDatabase privat
 
     fun getUpdatablePagedRoomSummariesLive(queryParams: RoomSummaryQueryParams,
                                            pagedListConfig: PagedList.Config,
-                                           sortOrder: RoomSortOrder): UpdatableLivePageResult {
+                                           sortOrder: EnumSet<RoomSortOrder>): UpdatableLivePageResult {
         val realmDataSourceFactory = monarchy.createDataSourceFactory { realm ->
             roomSummariesQuery(realm, queryParams).process(sortOrder)
         }
