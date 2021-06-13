@@ -20,6 +20,7 @@ import android.content.Context
 import android.text.TextUtils
 import android.text.method.MovementMethod
 import android.widget.LinearLayout
+import androidx.appcompat.widget.ThemeUtils
 import androidx.core.text.PrecomputedTextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
@@ -118,6 +119,10 @@ abstract class MessageTextItem : AbsMessageItem<MessageTextItem.Holder>() {
         holder.messageView.setOnClickListener(attributes.itemClickListener)
         holder.messageView.setOnLongClickListener(attributes.itemLongClickListener)
 
+        holder.messageView.setTextColor(im.vector.app.features.themes.ThemeUtils.getColor(
+                holder.messageView.context,
+                if (attributes.informationData.sentByMe) R.attr.sc_message_text_color_outgoing
+                else R.attr.sc_message_text_color_incoming))
         if (canUseTextFuture) {
             holder.messageView.setTextFuture(textFuture)
         } else {
