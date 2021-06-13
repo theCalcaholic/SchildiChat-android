@@ -47,6 +47,15 @@
         tools:visible="true" />
 
     <item
+        android:id="@+id/show_help"
+        android:icon="@drawable/ic_help"
+        android:title="@string/login_please_choose_a_user_name_help_2"
+        android:visible="true"
+        app:iconTint="?colorAccentPale"
+        app:showAsAction="always"
+        tools:visible="true" />
+
+    <item
         android:id="@+id/open_matrix_apps"
         android:title="@string/room_add_matrix_apps"
         app:actionLayout="@layout/custom_action_item_layout_badge"

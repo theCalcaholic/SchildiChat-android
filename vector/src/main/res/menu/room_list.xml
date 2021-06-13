@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <item
+        android:id="@+id/show_help"
+        android:icon="@drawable/ic_help"
+        android:title="@string/login_please_choose_a_user_name_help_2"
+        android:visible="true"
+        app:iconTint="?colorAccentPale"
+        app:showAsAction="always"
+        tools:visible="true" />
 
     <item
         android:id="@+id/menu_home_mark_all_as_read"

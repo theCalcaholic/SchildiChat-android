@@ -11,7 +11,7 @@
     <color name="accent_senior_200">#516A9F</color>
     <color name="accent_senior_300">#355089</color>
     <color name="accent_senior_900">#203A71</color>
-    <color name="accent_senior_pale">@color/accent_senior_300</color>
+    <color name="accent_senior_pale">@color/accent_senior_200</color>
     <color name="direct_chat_ring_color_senior">@color/accent_senior_dark</color>
 
     <color name="avatar_fill_senior_1">@color/accent_senior</color>

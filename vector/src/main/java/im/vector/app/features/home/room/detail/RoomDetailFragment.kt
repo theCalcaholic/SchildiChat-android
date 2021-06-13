@@ -805,6 +805,8 @@ class RoomDetailFragment @Inject constructor(
                 menu.findItem(it).icon?.alpha = if (callButtonsEnabled) 0xFF else 0x40
             }
             setOf(R.id.voice_call, R.id.video_call).forEach { menu.findItem(it).isVisible = vectorPreferences.shouldShowCallButtons() }
+            if (menu.findItem(R.id.show_help) == null)
+                Timber.w("help button missing!")
 
             val matrixAppsMenuItem = menu.findItem(R.id.open_matrix_apps)
             val widgetsCount = state.activeRoomWidgets.invoke()?.size ?: 0
@@ -847,6 +849,10 @@ class RoomDetailFragment @Inject constructor(
             }
             R.id.video_call       -> {
                 callActionsHandler.onVideoCallClicked()
+                true
+            }
+            R.id.show_help        -> {
+                Timber.i("help requested!")
                 true
             }
             R.id.hangup_call      -> {

@@ -625,10 +625,12 @@ class RoomDetailViewModel @AssistedInject constructor(
             R.id.voice_call,
             R.id.video_call       -> callManager.getCallsByRoomId(state.roomId).isEmpty()
             R.id.hangup_call      -> callManager.getCallsByRoomId(state.roomId).isNotEmpty()
-            R.id.show_room_info   -> true
-            R.id.show_participants -> true
-            R.id.search           -> true
+            // TODO: Make configurable via learn path
+            R.id.show_room_info   -> false
+            R.id.show_participants -> false
+            R.id.search           -> false
             R.id.dev_tools        -> vectorPreferences.developerMode()
+            R.id.show_help        -> true
             else                  -> false
         }
     }
